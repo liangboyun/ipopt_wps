@@ -2,4 +2,5 @@ ipopt_wps
 =========
 
 IpOpt for wps
-using IpOpt and sipopt in EPL
+Using IpOpt and sipopt in EPL
+It base on Ipopt-3.11.1

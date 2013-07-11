@@ -10,7 +10,7 @@
 #define __IPTYPES_HPP__
 
 #include "IpoptConfig.h"
-
+typedef unsigned int UINT;
 namespace Ipopt
 {
   /** Type of all numbers */

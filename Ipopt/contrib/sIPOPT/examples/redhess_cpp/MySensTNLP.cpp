@@ -7,7 +7,7 @@
 
 #include "MySensTNLP.hpp"
 #include "IpDenseVector.hpp"
-
+#include "IpIpoptData.hpp"
 #include <cassert>
 
 using namespace Ipopt;
@@ -207,4 +207,21 @@ void MySensTNLP::finalize_solution(SolverReturn status,
   // here is where we would store the solution to variables, or write to a file, etc
   // so we could use the solution. Since the solution is displayed to the console,
   // we currently do nothing here.
+	SmartPtr<const DenseVectorSpace> x_owner_space = dynamic_cast<const DenseVectorSpace*>(GetRawPtr(ip_data->curr()->x()->OwnerSpace()));
+
+	if (!IsValid(x_owner_space)) {
+		printf("Error IsValid(x_owner_space) failed\n");
+		return;
+	}
+	std::string state;
+	std::vector<Number> sens_sol_vec;
+	state = "red_hessian";
+	sens_sol_vec = x_owner_space->GetNumericMetaData(state.c_str());
+
+	// Print the solution vector
+	printf("\n"
+		"                Nominal                    Perturbed\n");
+	for (Index k=0; k<(Index) sens_sol_vec.size(); ++k) {
+		printf("x[%3d]   % .23f   % .23f\n", k, x[k], sens_sol_vec[k]);
+	}
 }

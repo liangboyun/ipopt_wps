@@ -10,22 +10,20 @@
 #include "SensApplication.hpp"
 #include "IpPDSearchDirCalc.hpp"
 #include "IpIpoptAlg.hpp"
-#include "SensRegOp.hpp"
+// #include "SensRegOp.hpp"
 
 int main(int argv, char**argc)
 {
 
   using namespace Ipopt;
 
-  SmartPtr<IpoptApplication> app_ipopt = new IpoptApplication();
+  SmartPtr<IpoptApplication> app_ipopt = IpoptApplicationFactory();
 
-  SmartPtr<SensApplication> app_sens = new SensApplication(app_ipopt->Jnlst(),
-							   app_ipopt->Options(),
-							   app_ipopt->RegOptions());
+  SmartPtr<SensApplication> app_sens = app_ipopt->SensApp();
 
   // Register sIPOPT options
-  RegisterOptions_sIPOPT(app_ipopt->RegOptions());
-  app_ipopt->Options()->SetRegisteredOptions(app_ipopt->RegOptions());
+//   RegisterOptions_sIPOPT(app_ipopt->RegOptions());
+//   app_ipopt->Options()->SetRegisteredOptions(app_ipopt->RegOptions());
 
   // Call Initialize the first time to create a journalist, but ignore
   // any options file
@@ -38,13 +36,13 @@ int main(int argv, char**argc)
 
 
   app_ipopt->Initialize();
+  app_sens->Initialize();
 
   // create AmplSensTNLP from argc. This is an nlp because we are using our own TNLP Adapter
   SmartPtr<TNLP> sens_tnlp = new MySensTNLP();
 
   app_ipopt->Options()->SetStringValueIfUnset("compute_red_hessian", "yes");
 
-  app_sens->Initialize();
 
   retval = app_ipopt->OptimizeTNLP(sens_tnlp);
 

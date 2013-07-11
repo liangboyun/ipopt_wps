@@ -17,7 +17,7 @@
 #define COIN_IPOPT_VERBOSITY 0
 
 /* If defined, the Ampl Solver Library is available. */
-#define COIN_HAS_ASL 1
+// #define COIN_HAS_ASL 1
 
 /* If defined, the BLAS Library is available. */
 #define COIN_HAS_BLAS 1
@@ -26,7 +26,7 @@
 #define COIN_HAS_LAPACK 1
 
 /* If defined, the HSL library is available. */
-#define COIN_HAS_HSL 1
+// #define COIN_HAS_HSL 1
 
 /* If defined, the METIS library is available. */
 /* #undef COIN_HAS_METIS */

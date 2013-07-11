@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{5f59cc85-e415-42ad-9436-2e7c951a23c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libseq">
+      <UniqueIdentifier>{e052f7b4-4c6d-410f-b1ea-286b0b8d4e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_c.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_common.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_io.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_io_basic.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_io_err.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_io_thread.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\src\mumps_orderings.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\thirdparty\mumps\mumps\src\mumps_size.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\libseq\elapse.c">
+      <Filter>Source Files\libseq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ThirdParty\Mumps\MUMPS\libseq\mpic.c">
+      <Filter>Source Files\libseq</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

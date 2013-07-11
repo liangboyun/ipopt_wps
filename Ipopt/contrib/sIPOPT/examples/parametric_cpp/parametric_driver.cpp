@@ -8,23 +8,21 @@
 
 #include "IpIpoptApplication.hpp"
 #include "SensApplication.hpp"
-#include "IpPDSearchDirCalc.hpp"
-#include "IpIpoptAlg.hpp"
-#include "SensRegOp.hpp"
+// #include "IpPDSearchDirCalc.hpp"
+// #include "IpIpoptAlg.hpp"
+// #include "SensRegOp.hpp"
 
 int main(int argv, char**argc)
 {
   using namespace Ipopt;
 
-  SmartPtr<IpoptApplication> app_ipopt = new IpoptApplication();
+  SmartPtr<IpoptApplication> app_ipopt = IpoptApplicationFactory();
 
-  SmartPtr<SensApplication> app_sens = new SensApplication(app_ipopt->Jnlst(),
-							   app_ipopt->Options(),
-							   app_ipopt->RegOptions());
+  SmartPtr<SensApplication> app_sens = app_ipopt->SensApp();
 
   // Register sIPOPT options
-  RegisterOptions_sIPOPT(app_ipopt->RegOptions());
-  app_ipopt->Options()->SetRegisteredOptions(app_ipopt->RegOptions());
+//   RegisterOptions_sIPOPT(app_ipopt->RegOptions());
+//   app_ipopt->Options()->SetRegisteredOptions(app_ipopt->RegOptions());
 
   // Call Initialize the first time to create a journalist, but ignore
   // any options file

@@ -125,7 +125,7 @@ namespace Ipopt
     roptions->AddStringOption2(
       "hessian_approximation",
       "Indicates what Hessian information is to be used.",
-      "exact",
+      "limited-memory",
       "exact", "Use second derivatives provided by the NLP.",
       "limited-memory", "Perform a limited-memory quasi-Newton approximation",
       "This determines which kind of information for the Hessian of the "

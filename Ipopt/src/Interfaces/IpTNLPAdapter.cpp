@@ -442,6 +442,18 @@ namespace Ipopt
       bool retval = tnlp_->get_bounds_info(n_full_x_, x_l, x_u, n_full_g_, g_l, g_u);
       ASSERT_EXCEPTION(retval, INVALID_TNLP, "get_bounds_info returned false in GetSpaces");
 
+	  // check if the variable has a invalid bound
+	  for (Index i = 0; i < n_full_x_; ++i)
+	  {
+		  if (x_l[i] > x_u[i])
+		  {
+			  char string[128];
+			  Snprintf(string, 127, "The variable no.%d got a conflicted bound", i);
+			  jnlst_->Printf(J_WARNING, J_INITIALIZATION, string);
+			  THROW_EXCEPTION(VARIABLE_BOUND_CONFLICT, string);
+		  }
+	  }
+
       //*********************************************************
       // Create the spaces and permutation spaces
       //*********************************************************
@@ -1900,24 +1912,28 @@ namespace Ipopt
     const NumericMetaDataMapType y_c_meta = y_c_space->GetNumericMetaData();
     const NumericMetaDataMapType y_d_meta = y_d_space->GetNumericMetaData();
     NumericMetaDataMapType::const_iterator y_c_meta_iter;
-    for (y_c_meta_iter=y_c_meta.begin(); y_c_meta_iter!=y_c_meta.end(); ++y_c_meta_iter) {
-      if ((Index)y_c_meta_iter->second.size()==y_c.Dim()) {
-        if (y_d_space->HasNumericMetaData(y_c_meta_iter->first.c_str())           // There exists a corresponding y_d metadata
-            && ((Index)(y_d_meta.find(y_c_meta_iter->first)->second).size())==y_d.Dim()) { // and y_d metadata vector has size y_d.Dim()
-          std::vector<Number> y_d_second =
-            y_d_space->GetNumericMetaData(y_c_meta_iter->first);
-          std::vector<Number> new_g_meta_data;
-          new_g_meta_data.resize(n_full_g_);
-          SmartPtr<DenseVector> y_c_meta_vector =
-            y_c_space->MakeNewDenseVector();
-          SmartPtr<DenseVector> y_d_meta_vector =
-            y_d_space->MakeNewDenseVector();
-          y_c_meta_vector->SetValues(&(y_c_meta_iter->second)[0]);
-          y_d_meta_vector->SetValues(&y_d_second[0]);
-          ResortG(*y_c_meta_vector, *y_d_meta_vector, &new_g_meta_data[0]);
-          con_numeric_md[y_c_meta_iter->first] = new_g_meta_data;
-        }
-      }
+    for (y_c_meta_iter = y_c_meta.begin();
+		 y_c_meta_iter != y_c_meta.end();
+		 ++y_c_meta_iter) {
+		if ((Index)y_c_meta_iter->second.size()==y_c.Dim()) {
+			if (y_d_space->HasNumericMetaData(y_c_meta_iter->first.c_str())           // There exists a corresponding y_d metadata
+				&& ((Index)(y_d_meta.find(y_c_meta_iter->first)->second).size()) == y_d.Dim()) // and y_d metadata vector has size y_d.Dim()
+			{
+					std::vector<Number> y_d_second =
+						y_d_space->GetNumericMetaData(y_c_meta_iter->first);
+					std::vector<Number> new_g_meta_data;
+					new_g_meta_data.resize(n_full_g_);
+					SmartPtr<DenseVector> y_c_meta_vector =
+						y_c_space->MakeNewDenseVector();
+					SmartPtr<DenseVector> y_d_meta_vector =
+						y_d_space->MakeNewDenseVector();
+					y_c_meta_vector->SetValues(&(y_c_meta_iter->second)[0]);
+					if (!y_d_second.empty())
+						y_d_meta_vector->SetValues(&y_d_second[0]);
+					ResortG(*y_c_meta_vector, *y_d_meta_vector, &new_g_meta_data[0]);
+					con_numeric_md[y_c_meta_iter->first] = new_g_meta_data;
+			}
+		}
     }
 
     Number* full_g = new Number[n_full_g_];
@@ -1961,7 +1977,8 @@ namespace Ipopt
           SmartPtr<DenseVector> z_U_meta_vector =
             z_U_space->MakeNewDenseVector();
           z_L_meta_vector->SetValues(&(z_L_meta_iter->second)[0]);
-          z_U_meta_vector->SetValues(&z_U_second[0]);
+		  if (!z_U_second.empty())
+			z_U_meta_vector->SetValues(&z_U_second[0]);
           std::vector<Number> new_z_L_meta_data(n_full_x_, 0.0);
           std::vector<Number> new_z_U_meta_data(n_full_x_, 0.0);
           ResortBnds(*z_L_meta_vector, &new_z_L_meta_data[0],

@@ -43,6 +43,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\sipopt">
+      <UniqueIdentifier>{7e9c1d09-7baf-4cff-a4cc-166d9368701b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Algorithm\IpAdaptiveMuUpdate.cpp">
@@ -408,6 +411,42 @@
     <ClCompile Include="..\..\..\src\Common\IpUtils.cpp">
       <Filter>Source Files\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensAlgorithm.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensApplication.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensBuilder.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensDenseGenSchurDriver.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensIndexPCalculator.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensIndexSchurData.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensMetadataMeasurement.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensReducedHessianCalculator.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensRegOp.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensSimpleBacksolver.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensStdStepCalc.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sipopt\SensUtils.cpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\LinAlg\TMatrices\IpGenTMatrix.hpp">
@@ -424,6 +463,63 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensAlgorithm.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensApplication.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensBacksolver.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensBuilder.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensDenseGenSchurDriver.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensIndexPCalculator.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensIndexSchurData.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensMeasurement.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensMetadataMeasurement.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensPCalculator.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensReducedHessianCalculator.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensRegOp.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensSchurData.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensSchurDriver.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensSimpleBacksolver.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensStdStepCalc.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensStepCalc.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensSuffixHandler.hpp">
+      <Filter>Source Files\sipopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sipopt\SensUtils.hpp">
+      <Filter>Source Files\sipopt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

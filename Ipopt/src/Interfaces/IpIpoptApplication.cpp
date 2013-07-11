@@ -21,6 +21,9 @@
 #include "IpCGPenaltyRegOp.hpp"
 #include "IpNLPBoundsRemover.hpp"
 
+#include "SensApplication.hpp"
+#include "SensRegOp.hpp"
+
 #ifdef COIN_HAS_HSL
 #include "CoinHslConfig.h"
 #endif
@@ -89,6 +92,8 @@ namespace Ipopt
 
       options_->SetJournalist(jnlst_);
       options_->SetRegisteredOptions(reg_options_);
+
+	  app_sens_ = new SensApplication(jnlst_, options_, reg_options_);
     }
     catch (IpoptException& exc) {
       exc.ReportException(*jnlst_);
@@ -1008,6 +1013,12 @@ namespace Ipopt
         statistics_ = new SolveStatistics(p2ip_nlp, p2ip_data, p2ip_cq);
       }
     }
+	catch (VARIABLE_BOUND_CONFLICT& exc) {
+		exc.ReportException(*jnlst_, J_ERROR);
+		jnlst_->Printf(J_SUMMARY, J_MAIN, "\nEXIT: Invalid bound in variables or constrains.\n");
+		status = HAS_BOUND_CONFLICT;
+		retValue = Variable_Bound_Conflict;
+	}
     catch (TOO_FEW_DOF& exc) {
       exc.ReportException(*jnlst_, J_ERROR);
       jnlst_->Printf(J_SUMMARY, J_MAIN, "\nEXIT: Problem has too few degrees of freedom.\n");
@@ -1140,6 +1151,7 @@ namespace Ipopt
 #ifdef BUILD_INEXACT
     RegisterOptions_Inexact(roptions);
 #endif
+	RegisterOptions_sIPOPT(roptions);
   }
 
   SmartPtr<SolveStatistics> IpoptApplication::Statistics()

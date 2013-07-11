@@ -1,7 +1,7 @@
 #include "config_default.h"
 
 /* If defined, the METIS library is available. */
-#define COIN_HAS_METIS 1
+// #define COIN_HAS_METIS 1
 
 /* If defined, the MUMPS Library is available. */
 #define COIN_HAS_MUMPS 1
@@ -10,7 +10,7 @@
 
 /* Define to 1 if the linear solver loader should be compiled to allow dynamic
    loading of shared libaries with linear solvers */
-#define HAVE_LINEARSOLVERLOADER 1
+// #define HAVE_LINEARSOLVERLOADER 1
 
 /* Define to 1 if Pardiso is available */
 #undef HAVE_PARDISO

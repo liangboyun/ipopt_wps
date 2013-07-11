@@ -106,7 +106,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;../../../src/sipopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IPOPT_BUILD;IPOPT_DLL;WIN32;_DEBUG;_LIB;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -118,12 +118,11 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../lib/$(Platform)/ReleaseMKL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(INTEL_COMPILER_PATH)\lib\ia32;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
-      <AdditionalDependencies>ipoptfss.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IpOptFSS.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>..\IpOpt\ExportBinaries.bat $(PlatformName) $(ConfigurationName) "$(INTEL_COMPILER_PATH)"</Command>
@@ -160,7 +159,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;../../../src/sipopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IPOPT_BUILD;IPOPT_DLL;WIN32;NDEBUG;_LIB;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -171,11 +170,13 @@
     <Link>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../lib/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib/$(Platform)/$(Configuration);$(IFORT_COMPILER13)\compiler\lib\ia32\;$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)$(ProjectName).lib</ImportLibrary>
-      <AdditionalDependencies>ipoptfss.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IpOptFSS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>..\IpOpt\ExportBinaries.bat $(PlatformName) $(ConfigurationName) "$(INTEL_COMPILER_PATH)"</Command>
@@ -209,9 +210,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMKL|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;../../../src/Algorithm;../../../src/Algorithm/Inexact;../../../src/Algorithm/LinearSolvers;../../../src/Common;../../../src/Contrib/CGPenalty;../../../src/Contrib/LinearSolverLoader;../../../src/Interfaces;../../../src/Linalg;../../../src/Linalg/TMatrices;../../../../Thirdparty/Mumps/MUMPS/libseq;../../../../Thirdparty/Mumps/MUMPS/include;../../../../BuildTools/headers;../../../src/sipopt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>IPOPT_BUILD;IPOPT_DLL;WIN32;NDEBUG;_LIB;HAVE_CONFIG_H;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <OpenMPSupport>true</OpenMPSupport>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -221,7 +222,7 @@
     <Link>
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>../lib/$(Platform)/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../lib/$(Platform)/$(Configuration);$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
@@ -479,11 +480,42 @@
     <ClCompile Include="..\..\..\src\Common\IpOptionsList.cpp" />
     <ClCompile Include="..\..\..\src\Common\IpRegOptions.cpp" />
     <ClCompile Include="..\..\..\src\Common\IpUtils.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensAlgorithm.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensApplication.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensBuilder.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensDenseGenSchurDriver.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensIndexPCalculator.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensIndexSchurData.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensMetadataMeasurement.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensReducedHessianCalculator.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensRegOp.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensSimpleBacksolver.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensStdStepCalc.cpp" />
+    <ClCompile Include="..\..\..\src\sipopt\SensUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\LinAlg\TMatrices\IpGenTMatrix.hpp" />
     <ClInclude Include="..\..\..\src\LinAlg\TMatrices\IpSymTMatrix.hpp" />
     <ClInclude Include="..\..\..\src\LinAlg\TMatrices\IpTripletHelper.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensAlgorithm.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensApplication.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensBacksolver.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensBuilder.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensDenseGenSchurDriver.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensIndexPCalculator.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensIndexSchurData.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensMeasurement.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensMetadataMeasurement.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensPCalculator.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensReducedHessianCalculator.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensRegOp.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensSchurData.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensSchurDriver.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensSimpleBacksolver.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensStdStepCalc.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensStepCalc.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensSuffixHandler.hpp" />
+    <ClInclude Include="..\..\..\src\sipopt\SensUtils.hpp" />
     <ClInclude Include="config.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

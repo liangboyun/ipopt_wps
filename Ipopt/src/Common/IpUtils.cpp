@@ -156,7 +156,7 @@ namespace Ipopt
   bool IsFiniteNumber(Number val)
   {
 #ifdef COIN_C_FINITE
-    return (bool)COIN_C_FINITE(val);
+    return 0 != COIN_C_FINITE(val);
 #else
 
     return true;

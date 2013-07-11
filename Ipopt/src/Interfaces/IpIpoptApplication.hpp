@@ -26,6 +26,7 @@
 #include "IpJournalist.hpp"
 #include "IpTNLP.hpp"
 #include "IpNLP.hpp"
+#include "SensApplication.hpp"
 /* Return codes for the Optimize call for an application */
 #include "IpReturnCodes.hpp"
 
@@ -42,6 +43,7 @@ namespace Ipopt
   class RegisteredOptions;
   class OptionsList;
   class SolveStatistics;
+  class SensApplication;
 
   /** This is the main application class for making calls to Ipopt. */
   class IpoptApplication : public ReferencedObject
@@ -129,6 +131,12 @@ namespace Ipopt
     {
       return ConstPtr(options_);
     }
+
+	/** Get the sensitivity calculator */
+	SmartPtr<SensApplication> SensApp() const
+	{
+		return app_sens_;
+	}
 
     /** Get the object with the statistics about the most recent
      *  optimization run. */
@@ -225,6 +233,9 @@ namespace Ipopt
     /** Pointer to the TNLPAdapter used to convert the TNLP to an NLP.
      *  We keep this around for the ReOptimizerTNLP call. */
     SmartPtr<NLP> nlp_adapter_;
+
+	/** Pointer to the SensApplication for sensitivity calculations. */
+	SmartPtr<SensApplication> app_sens_;
 
     /** @name Algorithmic parameters */
     //@{
