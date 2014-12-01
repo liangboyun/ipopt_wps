@@ -2,7 +2,7 @@
 // All Rights Reserved.
 // This code is published under the Eclipse Public License.
 //
-// $Id: IpAdaptiveMuUpdate.cpp 2114 2012-10-15 02:44:24Z andreasw $
+// $Id: IpAdaptiveMuUpdate.cpp 2386 2013-09-12 10:50:10Z stefan $
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-08-13
 
@@ -698,6 +698,7 @@ namespace Ipopt
         break;
       case 2:
         centrality = complty/xi;
+        break;
       case 3:
         centrality = complty/pow(xi,3);
         break;

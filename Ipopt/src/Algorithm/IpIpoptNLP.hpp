@@ -57,6 +57,7 @@ namespace Ipopt
     //@{
     /** thrown if there is any error evaluating values from the nlp */
     DECLARE_STD_EXCEPTION(Eval_Error);
+	DECLARE_STD_EXCEPTION(Eval_Error_In_Initialization);
     //@}
     /** Initialize (create) structures for
      *  the iteration data */

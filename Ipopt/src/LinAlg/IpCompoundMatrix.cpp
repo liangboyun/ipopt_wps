@@ -2,7 +2,7 @@
 // All Rights Reserved.
 // This code is published under the Eclipse Public License.
 //
-// $Id: IpCompoundMatrix.cpp 1861 2010-12-21 21:34:47Z andreasw $
+// $Id: IpCompoundMatrix.cpp 2386 2013-09-12 10:50:10Z stefan $
 //
 // Authors:  Carl Laird, Andreas Waechter     IBM    2004-08-13
 
@@ -516,15 +516,17 @@ namespace Ipopt
 
     for (Index jcol = 0; jcol < NComps_Cols(); jcol++) {
       for (Index irow = 0; irow < NComps_Rows(); irow++) {
-        SmartPtr<Vector> vec_i;
-        if (comp_vec) {
-          vec_i = comp_vec->GetCompNonConst(irow);
+        if (ConstComp(irow, jcol)) {
+          SmartPtr<Vector> vec_i;
+          if (comp_vec) {
+            vec_i = comp_vec->GetCompNonConst(irow);
+          }
+          else {
+            vec_i = &rows_norms;
+          }
+          DBG_ASSERT(IsValid(vec_i));
+          ConstComp(irow, jcol)->ComputeRowAMax(*vec_i, false);
         }
-        else {
-          vec_i = &rows_norms;
-        }
-        DBG_ASSERT(IsValid(vec_i));
-        ConstComp(irow, jcol)->ComputeRowAMax(*vec_i, false);
       }
     }
   }
@@ -557,15 +559,17 @@ namespace Ipopt
 
     for (Index irow = 0; irow < NComps_Rows(); irow++) {
       for (Index jcol = 0; jcol < NComps_Cols(); jcol++) {
-        SmartPtr<Vector> vec_i;
-        if (comp_vec) {
-          vec_i = comp_vec->GetCompNonConst(irow);
+        if (ConstComp(irow, jcol)) {
+          SmartPtr<Vector> vec_i;
+          if (comp_vec) {
+            vec_i = comp_vec->GetCompNonConst(irow);
+          }
+          else {
+            vec_i = &cols_norms;
+          }
+          DBG_ASSERT(IsValid(vec_i));
+          ConstComp(irow, jcol)->ComputeColAMax(*vec_i, false);
         }
-        else {
-          vec_i = &cols_norms;
-        }
-        DBG_ASSERT(IsValid(vec_i));
-        ConstComp(irow, jcol)->ComputeColAMax(*vec_i, false);
       }
     }
   }

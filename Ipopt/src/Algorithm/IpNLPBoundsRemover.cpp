@@ -42,7 +42,8 @@ namespace Ipopt
                               SmartPtr<const MatrixSpace>& pd_u_space,
                               SmartPtr<const MatrixSpace>& Jac_c_space,
                               SmartPtr<const MatrixSpace>& Jac_d_space,
-                              SmartPtr<const SymMatrixSpace>& Hess_lagrangian_space)
+                              SmartPtr<const SymMatrixSpace>& Hess_lagrangian_space,
+							  bool bHostInit)
   {
     DBG_START_METH("NLPBoundsRemover::GetSpaces", dbg_verbosity);
     SmartPtr<const VectorSpace> d_space_orig;

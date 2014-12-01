@@ -344,7 +344,8 @@ namespace Ipopt
                               SmartPtr<const MatrixSpace>& pd_u_space,
                               SmartPtr<const MatrixSpace>& Jac_c_space,
                               SmartPtr<const MatrixSpace>& Jac_d_space,
-                              SmartPtr<const SymMatrixSpace>& Hess_lagrangian_space)
+                              SmartPtr<const SymMatrixSpace>& Hess_lagrangian_space,
+							  bool bHostInit)
   {
     DBG_START_METH("TNLPAdapter::GetSpaces", dbg_verbosity);
 
@@ -633,8 +634,16 @@ namespace Ipopt
           full_x_[i] = x_l[i];
           bool retval = tnlp_->eval_g(n_full_x_, full_x_, true,
                                       n_full_g_, full_g_);
-          ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error,
-                           "All variables are fixed, but constraints cannot be evaluated at fixed point.");
+
+		  if (bHostInit)
+		  {
+			  ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error_In_Initialization, "Initialization error."); 
+		  }
+		  else
+		  {
+			  ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error,
+				  "All variables are fixed, but constraints cannot be evaluated at fixed point.");
+		  }
         }
         Number max_viol = 0.;
         for (Index i=0; i<n_full_g_; i++) {
@@ -652,8 +661,15 @@ namespace Ipopt
 
         Number obj_value;
         bool retval = tnlp_->eval_f(n_full_x_, full_x_, false, obj_value);
-        ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error,
-                         "All variables are fixed, but objective cannot be evaluated at fixed point.");
+		if (bHostInit)
+		{
+			ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error_In_Initialization, "Initialization error."); 
+		}
+		else
+		{
+			ASSERT_EXCEPTION(retval, IpoptNLP::Eval_Error,
+				"All variables are fixed, but constraints cannot be evaluated at fixed point.");
+		}
         // Call finalize_solution so that user has required information
         Number* full_z_L = new Number[n_full_x_];
         Number* full_z_U = new Number[n_full_x_];
@@ -1926,13 +1942,13 @@ namespace Ipopt
 					SmartPtr<DenseVector> y_c_meta_vector =
 						y_c_space->MakeNewDenseVector();
 					SmartPtr<DenseVector> y_d_meta_vector =
-						y_d_space->MakeNewDenseVector();
-					y_c_meta_vector->SetValues(&(y_c_meta_iter->second)[0]);
-					if (!y_d_second.empty())
-						y_d_meta_vector->SetValues(&y_d_second[0]);
-					ResortG(*y_c_meta_vector, *y_d_meta_vector, &new_g_meta_data[0]);
-					con_numeric_md[y_c_meta_iter->first] = new_g_meta_data;
-			}
+            y_d_space->MakeNewDenseVector();
+          y_c_meta_vector->SetValues(&(y_c_meta_iter->second)[0]);
+		  if (!y_d_second.empty())
+          y_d_meta_vector->SetValues(&y_d_second[0]);
+          ResortG(*y_c_meta_vector, *y_d_meta_vector, &new_g_meta_data[0]);
+          con_numeric_md[y_c_meta_iter->first] = new_g_meta_data;
+        }
 		}
     }
 
@@ -1978,7 +1994,7 @@ namespace Ipopt
             z_U_space->MakeNewDenseVector();
           z_L_meta_vector->SetValues(&(z_L_meta_iter->second)[0]);
 		  if (!z_U_second.empty())
-			z_U_meta_vector->SetValues(&z_U_second[0]);
+          z_U_meta_vector->SetValues(&z_U_second[0]);
           std::vector<Number> new_z_L_meta_data(n_full_x_, 0.0);
           std::vector<Number> new_z_U_meta_data(n_full_x_, 0.0);
           ResortBnds(*z_L_meta_vector, &new_z_L_meta_data[0],
@@ -2934,7 +2950,7 @@ namespace Ipopt
         return false;
       }
     }
-    if (!tnlp_->eval_jac_g(n_full_x_, full_x_, false, n_full_g_,
+    if (!tnlp_->eval_jac_g(n_full_x_, full_x_, !dependency_detection_with_rhs_, n_full_g_,
                            nz_full_jac_g_, NULL, NULL, jac_g_)) {
       delete [] jac_c_iRow;
       delete [] jac_c_jCol;

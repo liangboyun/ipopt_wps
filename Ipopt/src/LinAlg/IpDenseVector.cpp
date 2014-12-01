@@ -36,7 +36,9 @@ namespace Ipopt
       owner_space_(owner_space),
       values_(NULL),
       expanded_values_(NULL),
-      initialized_(false)
+      initialized_(false),
+	  homogeneous_(true),
+	  scalar_(0)
   {
     DBG_START_METH("DenseVector::DenseVector(Index dim)", dbg_verbosity);
     if (Dim() == 0) {

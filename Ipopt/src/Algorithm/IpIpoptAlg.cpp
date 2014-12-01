@@ -440,6 +440,12 @@ namespace Ipopt
       IpData().TimingStats().ComputeAcceptableTrialPoint().EndIfStarted();
       retval = INVALID_NUMBER_DETECTED;
     }
+	catch (IpoptNLP::Eval_Error_In_Initialization & exc)
+	{
+		exc.ReportException(Jnlst(), J_MOREDETAILED);
+		IpData().TimingStats().ComputeAcceptableTrialPoint().EndIfStarted();
+		retval = INVALID_NUMBER_DETECTED_IN_INITIALIZATION;
+	}
     catch (FEASIBILITY_PROBLEM_SOLVED& exc) {
       exc.ReportException(Jnlst(), J_MOREDETAILED);
       IpData().TimingStats().ComputeAcceptableTrialPoint().EndIfStarted();

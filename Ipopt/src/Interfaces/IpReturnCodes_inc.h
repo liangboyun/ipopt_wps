@@ -31,7 +31,8 @@ enum ApplicationReturnStatus
     Invalid_Problem_Definition=-11,
     Invalid_Option=-12,
     Invalid_Number_Detected=-13,
-	Variable_Bound_Conflict=-14,
+	Invalid_Number_Detected_In_Initialization =-14,
+	Variable_Bound_Conflict=-15,
 
     Unrecoverable_Exception=-100,
     NonIpopt_Exception_Thrown=-101,

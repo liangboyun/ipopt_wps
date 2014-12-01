@@ -77,6 +77,7 @@ namespace Ipopt
     mumps_->icntl[2] = 0;//QUIETLY!
     mumps_->icntl[3] = 0;
     mumps_ptr_ = (void*)mumps_;
+	negevals_ = 0;
   }
 
 

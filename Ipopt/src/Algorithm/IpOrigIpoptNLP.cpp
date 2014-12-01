@@ -1,4 +1,4 @@
-// Copyright (C) 2004, 2011 International Business Machines and others.
+﻿// Copyright (C) 2004, 2011 International Business Machines and others.
 // All Rights Reserved.
 // This code is published under the Eclipse Public License.
 //
@@ -241,7 +241,7 @@ namespace Ipopt
                                  d_l_space_, pd_l_space_,
                                  d_u_space_, pd_u_space_,
                                  jac_c_space_, jac_d_space_,
-                                 h_space_);
+                                 h_space_, true);
 
       if (!retValue) {
         jnlst_->Printf(J_WARNING, J_INITIALIZATION,
@@ -305,11 +305,12 @@ namespace Ipopt
                                       scaled_h_space_,
                                       *Px_L, *x_L, *Px_U, *x_U);
 
-      if (x_space_->Dim() < c_space_->Dim()) {
+      /*让它继续求解。不能单纯判断等式约束大于变量数
+	  if (x_space_->Dim() < c_space_->Dim()) {
         char msg[128];
         Snprintf(msg, 127, "Too few degrees of freedom: %d equality constriants but only %d variables", c_space_->Dim(), x_space_->Dim());
         THROW_EXCEPTION(TOO_FEW_DOF, msg);
-      }
+      }*/
       ASSERT_EXCEPTION(x_space_->Dim() > 0, TOO_FEW_DOF,
                        "Too few degrees of freedom (no free variables)!");
 

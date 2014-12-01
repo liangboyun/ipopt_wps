@@ -868,7 +868,7 @@ namespace Ipopt
                      "\nNumber of Iterations....: %d\n",
                      p2ip_data->iter_count());
 
-      if (status!=INVALID_NUMBER_DETECTED) {
+      if (status != INVALID_NUMBER_DETECTED_IN_INITIALIZATION && status!=INVALID_NUMBER_DETECTED) {
         try {
           jnlst_->Printf(J_SUMMARY, J_SOLUTION,
                          "\n                                   (scaled)                 (unscaled)\n");
@@ -897,15 +897,22 @@ namespace Ipopt
           status = INVALID_NUMBER_DETECTED;
           exc.ReportException(*jnlst_, J_ERROR);
         }
+		catch (IpoptNLP::Eval_Error_In_Initialization & exc){
+			status = INVALID_NUMBER_DETECTED_IN_INITIALIZATION;
+			exc.ReportException(*jnlst_, J_ERROR);
+		}
       }
 
-      p2ip_data->curr()->x()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "x");
-      p2ip_data->curr()->y_c()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "y_c");
-      p2ip_data->curr()->y_d()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "y_d");
-      p2ip_data->curr()->z_L()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "z_L");
-      p2ip_data->curr()->z_U()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "z_U");
-      p2ip_data->curr()->v_L()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "v_L");
-      p2ip_data->curr()->v_U()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "v_U");
+	  if (IsValid(p2ip_data->curr()))
+	  {
+		  p2ip_data->curr()->x()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "x");
+		  p2ip_data->curr()->y_c()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "y_c");
+		  p2ip_data->curr()->y_d()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "y_d");
+		  p2ip_data->curr()->z_L()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "z_L");
+		  p2ip_data->curr()->z_U()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "z_U");
+		  p2ip_data->curr()->v_L()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "v_L");
+		  p2ip_data->curr()->v_U()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "v_U");
+	  }
 
       if (status==LOCAL_INFEASIBILITY) {
         p2ip_cq->curr_c()->Print(*jnlst_, J_VECTOR, J_SOLUTION, "curr_c");
@@ -1002,13 +1009,18 @@ namespace Ipopt
         retValue = Invalid_Number_Detected;
         jnlst_->Printf(J_SUMMARY, J_MAIN, "\nEXIT: Invalid number in NLP function or derivative detected.\n");
       }
+	  else if (status == INVALID_NUMBER_DETECTED_IN_INITIALIZATION)
+	  {
+		  retValue = Invalid_Number_Detected_In_Initialization;
+		  jnlst_->Printf(J_SUMMARY, J_MAIN, "\nEXIT: Invalid number in NLP function or derivative detected in initialization.");
+	  }
       else {
         retValue = Internal_Error;
         jnlst_->Printf(J_SUMMARY, J_MAIN, "\nEXIT: INTERNAL ERROR: Unknown SolverReturn value - Notify IPOPT Authors.\n");
         return retValue;
       }
 
-      if (status!=INVALID_NUMBER_DETECTED) {
+      if (status != INVALID_NUMBER_DETECTED_IN_INITIALIZATION && status!=INVALID_NUMBER_DETECTED) {
         // Create a SolveStatistics object
         statistics_ = new SolveStatistics(p2ip_nlp, p2ip_data, p2ip_cq);
       }
